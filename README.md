@@ -33,4 +33,4 @@ Open the URL Vite prints (usually `http://localhost:5173/winnable-mahjong/`).
 2. In the repo **Settings → Pages**, set source to **GitHub Actions**.
 3. Push to `main` — the workflow in `.github/workflows/deploy.yml` builds and deploys.
 
-Game URL: `https://<your-user>.github.io/winnable-mahjong/`
+Game URL: `https://mario1842.github.io/winnable-mahjong/`
