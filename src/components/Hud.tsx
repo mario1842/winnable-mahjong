@@ -37,9 +37,10 @@ export function Hud({ state, onUndo, onHint, onNewGame, onChangeLayout }: HudPro
           type="button"
           className="btn"
           onClick={onHint}
-          disabled={state.status !== 'playing'}
+          disabled={state.status !== 'playing' || state.clearingIds.length > 0}
+          title="Shortcut: H"
         >
-          Hint
+          Hint <kbd className="key">H</kbd>
         </button>
         <button type="button" className="btn" onClick={onNewGame}>
           New deal

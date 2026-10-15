@@ -58,8 +58,36 @@ export default function App() {
 
   const onHint = useCallback(() => {
     playUiClick()
-    setState((s) => (s ? applyHint(s) : s))
+    setState((s) => {
+      if (!s || s.status !== 'playing' || s.clearingIds.length > 0) return s
+      return applyHint(s)
+    })
   }, [])
+
+  useEffect(() => {
+    if (screen !== 'play') return
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey || event.metaKey || event.altKey) return
+      const target = event.target as HTMLElement | null
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.isContentEditable)
+      ) {
+        return
+      }
+
+      if (event.key === 'h' || event.key === 'H') {
+        event.preventDefault()
+        onHint()
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [screen, onHint])
 
   const onSelectTile = useCallback((id: string) => {
     setState((s) => {
