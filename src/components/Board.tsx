@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { isFree, layoutBounds, TILE_H, TILE_W } from '../engine/layout'
 import type { PlacedTile } from '../engine/tiles'
-import { gridToPixels, LAYER_DEPTH, TileView, tilePixelSize } from './TileView'
+import { gridToPixels, TileView, tilePixelSize } from './TileView'
 
 interface BoardProps {
   tiles: PlacedTile[]
@@ -46,16 +46,17 @@ export function Board({
     return <div className="board-wrap" />
   }
 
+  const depth = size.depth
   const width =
     (bounds.maxX - bounds.minX) * (size.w / TILE_W) +
-    bounds.maxZ * LAYER_DEPTH +
+    bounds.maxZ * depth +
     size.w +
-    LAYER_DEPTH
+    depth
   const height =
     (bounds.maxY - bounds.minY) * (size.h / TILE_H) +
-    bounds.maxZ * LAYER_DEPTH +
+    bounds.maxZ * depth +
     size.h +
-    LAYER_DEPTH
+    depth
 
   return (
     <div className="board-wrap">
@@ -70,6 +71,7 @@ export function Board({
             size.w,
             size.h,
             bounds.maxZ,
+            depth,
           )
           const free = isFree(tile, tiles)
           const clearing = clearingIds.includes(tile.id)

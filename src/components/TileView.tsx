@@ -76,20 +76,17 @@ export function TileView({
   )
 }
 
-/** CSS pixel size helpers for board layout. */
-export function tilePixelSize(): { w: number; h: number } {
+/** CSS pixel size helpers for board layout (follows responsive --tile-* vars). */
+export function tilePixelSize(): { w: number; h: number; depth: number } {
   if (typeof window === 'undefined') {
-    return { w: 66, h: 87 }
+    return { w: 66, h: 87, depth: 8 }
   }
   const styles = getComputedStyle(document.documentElement)
   const w = parseFloat(styles.getPropertyValue('--tile-w')) || 66
   const h = parseFloat(styles.getPropertyValue('--tile-h')) || 87
-  return { w, h }
+  const depth = parseFloat(styles.getPropertyValue('--tile-depth')) || 8
+  return { w, h, depth }
 }
-
-/** Layer offset in px — stacks go up/left so the face covers tiles below;
- *  the right/bottom bevel then sits over the lower tile. */
-export const LAYER_DEPTH = 9
 
 export function gridToPixels(
   x: number,
@@ -100,12 +97,13 @@ export function gridToPixels(
   tileW: number,
   tileH: number,
   maxZ = 0,
+  layerDepth = 8,
 ): { left: number; top: number } {
   const cellW = tileW / TILE_W
   const cellH = tileH / TILE_H
   // Pad by maxZ so left/up offsets never go negative.
   return {
-    left: (x - minX) * cellW + (maxZ - z) * LAYER_DEPTH,
-    top: (y - minY) * cellH + (maxZ - z) * LAYER_DEPTH,
+    left: (x - minX) * cellW + (maxZ - z) * layerDepth,
+    top: (y - minY) * cellH + (maxZ - z) * layerDepth,
   }
 }

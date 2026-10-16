@@ -563,35 +563,89 @@
   }
 }
 
-@media (max-width: 640px) {
+/* Tablet — a bit smaller than desktop */
+@media (max-width: 900px) {
   :root {
-    --tile-w: 48px;
-    --tile-h: 64px;
+    --tile-w: 52px;
+    --tile-h: 68px;
     --tile-depth: 6px;
   }
 
   .tile .glyph {
-    font-size: 1.45rem;
+    font-size: 1.65rem;
   }
 
   .pip {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
   }
 
   .stalk {
+    width: 6px;
+  }
+}
+
+/* Phone — zoomed out so full layouts fit */
+@media (max-width: 640px) {
+  :root {
+    --tile-w: 30px;
+    --tile-h: 40px;
+    --tile-depth: 4px;
+  }
+
+  .tile .glyph {
+    font-size: 0.95rem;
+  }
+
+  .pip {
     width: 5px;
+    height: 5px;
+  }
+
+  .stalk {
+    width: 3px;
   }
 
   .tile .suit-mark {
     display: none;
   }
 
+  .board-wrap {
+    padding: 0.5rem;
+    align-items: flex-start;
+  }
+
   .hud {
-    padding: 0.7rem 0.8rem;
+    padding: 0.55rem 0.65rem;
+    gap: 0.5rem;
+  }
+
+  .hud-stats {
+    gap: 0.65rem 0.9rem;
   }
 
   .stat strong {
-    font-size: 1.15rem;
+    font-size: 1rem;
+  }
+
+  .btn {
+    padding: 0.45rem 0.65rem;
+    font-size: 0.78rem;
+  }
+
+  .key {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  :root {
+    --tile-w: 26px;
+    --tile-h: 34px;
+    --tile-depth: 3px;
+  }
+
+  .tile .glyph {
+    font-size: 0.8rem;
   }
 }
