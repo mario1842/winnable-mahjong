@@ -105,6 +105,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
 }
 
 .hud {
@@ -209,18 +211,25 @@
   position: relative;
   z-index: 1;
   flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  overflow: auto;
+  overflow: hidden;
   isolation: isolate;
 }
 
-.board {
+.board-scale {
   position: relative;
-  margin: auto;
-  transform-origin: center center;
+  flex: 0 0 auto;
+}
+
+.board {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
 }
 
 .tile {
@@ -585,25 +594,25 @@
   }
 }
 
-/* Phone — zoomed out so full layouts fit */
+/* Phone — board auto-fits via JS scale; base tiles stay readable when scaled */
 @media (max-width: 640px) {
   :root {
-    --tile-w: 30px;
-    --tile-h: 40px;
-    --tile-depth: 4px;
+    --tile-w: 44px;
+    --tile-h: 58px;
+    --tile-depth: 5px;
   }
 
   .tile .glyph {
-    font-size: 0.95rem;
+    font-size: 1.25rem;
   }
 
   .pip {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
   }
 
   .stalk {
-    width: 3px;
+    width: 4px;
   }
 
   .tile .suit-mark {
@@ -611,8 +620,7 @@
   }
 
   .board-wrap {
-    padding: 0.5rem;
-    align-items: flex-start;
+    padding: 0.4rem;
   }
 
   .hud {
@@ -635,17 +643,5 @@
 
   .key {
     display: none;
-  }
-}
-
-@media (max-width: 400px) {
-  :root {
-    --tile-w: 26px;
-    --tile-h: 34px;
-    --tile-depth: 3px;
-  }
-
-  .tile .glyph {
-    font-size: 0.8rem;
   }
 }

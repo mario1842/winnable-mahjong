@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { isFree, layoutBounds, TILE_H, TILE_W } from '../engine/layout'
 import type { PlacedTile } from '../engine/tiles'
 import { gridToPixels, TileView, tilePixelSize } from './TileView'
@@ -18,7 +18,9 @@ export function Board({
   clearingIds,
   onSelect,
 }: BoardProps) {
+  const wrapRef = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState(() => tilePixelSize())
+  const [scale, setScale] = useState(1)
 
   useEffect(() => {
     const sync = () => setSize(tilePixelSize())
@@ -42,65 +44,111 @@ export function Board({
     [tiles],
   )
 
+  const depth = size.depth
+  const boardWidth = bounds
+    ? (bounds.maxX - bounds.minX) * (size.w / TILE_W) +
+      bounds.maxZ * depth +
+      size.w +
+      depth
+    : 0
+  const boardHeight = bounds
+    ? (bounds.maxY - bounds.minY) * (size.h / TILE_H) +
+      bounds.maxZ * depth +
+      size.h +
+      depth
+    : 0
+
+  // Fit the whole board into the available viewport (phones especially).
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el || !bounds || boardWidth <= 0 || boardHeight <= 0) return
+
+    const updateScale = () => {
+      const style = getComputedStyle(el)
+      const padX =
+        (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0)
+      const padY =
+        (parseFloat(style.paddingTop) || 0) + (parseFloat(style.paddingBottom) || 0)
+      const availW = Math.max(80, el.clientWidth - padX)
+      const availH = Math.max(80, el.clientHeight - padY)
+      const next = Math.min(1, availW / boardWidth, availH / boardHeight)
+      setScale(Number.isFinite(next) && next > 0 ? next : 1)
+    }
+
+    updateScale()
+    const ro = new ResizeObserver(updateScale)
+    ro.observe(el)
+    window.addEventListener('orientationchange', updateScale)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('orientationchange', updateScale)
+    }
+  }, [bounds, boardWidth, boardHeight])
+
   if (!bounds) {
-    return <div className="board-wrap" />
+    return <div className="board-wrap" ref={wrapRef} />
   }
 
-  const depth = size.depth
-  const width =
-    (bounds.maxX - bounds.minX) * (size.w / TILE_W) +
-    bounds.maxZ * depth +
-    size.w +
-    depth
-  const height =
-    (bounds.maxY - bounds.minY) * (size.h / TILE_H) +
-    bounds.maxZ * depth +
-    size.h +
-    depth
-
   return (
-    <div className="board-wrap">
-      <div className="board" style={{ width, height }} role="group" aria-label="Mahjong board">
-        {sorted.map((tile) => {
-          const { left, top } = gridToPixels(
-            tile.x,
-            tile.y,
-            tile.z,
-            bounds.minX,
-            bounds.minY,
-            size.w,
-            size.h,
-            bounds.maxZ,
-            depth,
-          )
-          const free = isFree(tile, tiles)
-          const clearing = clearingIds.includes(tile.id)
-          const burstIndex = clearingIds.indexOf(tile.id)
-          const base = tile.z * 1000 + tile.y * 40 + tile.x
-          const zIndex = clearing
-            ? 300000 + base
-            : selectedId === tile.id
-              ? 200000 + base
-              : hintIds.includes(tile.id)
-                ? 150000 + base
-                : base
+    <div className="board-wrap" ref={wrapRef}>
+      <div
+        className="board-scale"
+        style={{
+          width: boardWidth * scale,
+          height: boardHeight * scale,
+        }}
+      >
+        <div
+          className="board"
+          style={{
+            width: boardWidth,
+            height: boardHeight,
+            transform: `scale(${scale})`,
+          }}
+          role="group"
+          aria-label="Mahjong board"
+        >
+          {sorted.map((tile) => {
+            const { left, top } = gridToPixels(
+              tile.x,
+              tile.y,
+              tile.z,
+              bounds.minX,
+              bounds.minY,
+              size.w,
+              size.h,
+              bounds.maxZ,
+              depth,
+            )
+            const free = isFree(tile, tiles)
+            const clearing = clearingIds.includes(tile.id)
+            const burstIndex = clearingIds.indexOf(tile.id)
+            const base = tile.z * 1000 + tile.y * 40 + tile.x
+            const zIndex = clearing
+              ? 300000 + base
+              : selectedId === tile.id
+                ? 200000 + base
+                : hintIds.includes(tile.id)
+                  ? 150000 + base
+                  : base
 
-          return (
-            <TileView
-              key={tile.id}
-              tile={tile}
-              free={free}
-              selected={selectedId === tile.id}
-              hinted={hintIds.includes(tile.id)}
-              clearing={clearing}
-              burstIndex={burstIndex < 0 ? 0 : burstIndex}
-              left={left}
-              top={top}
-              zIndex={zIndex}
-              onSelect={onSelect}
-            />
-          )
-        })}
+            return (
+              <TileView
+                key={tile.id}
+                tile={tile}
+                free={free}
+                selected={selectedId === tile.id}
+                hinted={hintIds.includes(tile.id)}
+                clearing={clearing}
+                burstIndex={burstIndex < 0 ? 0 : burstIndex}
+                left={left}
+                top={top}
+                zIndex={zIndex}
+                onSelect={onSelect}
+              />
+            )
+          })}
+        </div>
       </div>
     </div>
   )
