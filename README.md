@@ -4,6 +4,8 @@ Mahjong Solitaire in the browser where **every deal is guaranteed solvable**. Pi
 
 **Play online:** [https://mario1842.github.io/winnable-mahjong/](https://mario1842.github.io/winnable-mahjong/)
 
+Also play **[Winnable Solitaire](https://mario1842.github.io/winnable-solitaire/)**.
+
 ## Play locally
 
 ```bash

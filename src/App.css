@@ -99,6 +99,72 @@
   color: var(--jade-bright);
 }
 
+.sister-games {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.sister-games-menu {
+  width: 100%;
+  animation: rise-in 0.7s ease 0.2s both;
+}
+
+.sister-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 196, 176, 0.22);
+  background: rgba(20, 12, 8, 0.35);
+  color: var(--ivory-dim);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.sister-link strong {
+  color: var(--jade-bright);
+  font-weight: 600;
+}
+
+.sister-link:hover,
+.sister-link:focus-visible {
+  color: var(--ivory);
+  border-color: var(--jade-bright);
+  background: rgba(61, 122, 106, 0.2);
+  outline: none;
+}
+
+a.sister-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn {
+  padding: 0.4rem 0.55rem;
+  min-width: 2.4rem;
+}
+
+.solitaire-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  display: block;
+}
+
+.sister-link .solitaire-icon {
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
 /* —— Play —— */
 .play {
   flex: 1;

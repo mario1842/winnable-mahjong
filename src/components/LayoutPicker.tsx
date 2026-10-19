@@ -1,4 +1,5 @@
 import type { LayoutDefinition } from '../engine/layout'
+import { SisterGames } from './SisterGames'
 
 interface LayoutPickerProps {
   layouts: LayoutDefinition[]
@@ -35,6 +36,8 @@ export function LayoutPicker({ layouts, onPick }: LayoutPickerProps) {
           </button>
         ))}
       </div>
+
+      <SisterGames variant="menu" />
     </div>
   )
 }

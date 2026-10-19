@@ -1,4 +1,5 @@
 import { formatTime, remainingCount, type GameState } from '../engine/game'
+import { SisterGames } from './SisterGames'
 
 interface HudProps {
   state: GameState
@@ -29,6 +30,9 @@ export function Hud({ state, onUndo, onHint, onNewGame, onChangeLayout }: HudPro
           <strong>{remainingCount(state)}</strong>
         </div>
       </div>
+
+      <SisterGames variant="hud" />
+
       <div className="hud-actions">
         <button type="button" className="btn" onClick={onUndo} disabled={state.history.length === 0}>
           Undo
