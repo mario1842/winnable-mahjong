@@ -24,6 +24,13 @@
   animation: rise-in 0.7s ease both;
 }
 
+.brand-mark {
+  width: 4.25rem;
+  height: 4.25rem;
+  margin: 0 auto 0.15rem;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.4));
+}
+
 .brand h1 {
   margin: 0;
   font-family: var(--font-display);
@@ -154,15 +161,26 @@ a.sister-btn {
   min-width: 2.4rem;
 }
 
-.solitaire-icon {
+.solitaire-icon,
+.mine-icon {
   width: 1.35rem;
   height: 1.35rem;
   display: block;
 }
 
-.sister-link .solitaire-icon {
+.mine-icon {
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.sister-link .solitaire-icon,
+.sister-link .mine-icon {
   width: 1.55rem;
   height: 1.55rem;
+}
+
+.hud .sister-games {
+  justify-self: center;
 }
 
 /* —— Play —— */

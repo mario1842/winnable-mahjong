@@ -1,4 +1,5 @@
 import type { LayoutDefinition } from '../engine/layout'
+import { MahjongIcon } from './MahjongIcon'
 import { SisterGames } from './SisterGames'
 
 interface LayoutPickerProps {
@@ -10,6 +11,7 @@ export function LayoutPicker({ layouts, onPick }: LayoutPickerProps) {
   return (
     <div className="menu">
       <div className="brand">
+        <MahjongIcon className="brand-mark" />
         <h1>
           Winnable
           <span>Mahjong</span>

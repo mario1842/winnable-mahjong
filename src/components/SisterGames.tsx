@@ -1,3 +1,4 @@
+import { MineIcon } from './MineIcon'
 import { SolitaireIcon } from './SolitaireIcon'
 
 const GAMES = [
@@ -7,6 +8,13 @@ const GAMES = [
     title: 'Winnable Solitaire',
     label: 'Solitaire',
     icon: <SolitaireIcon className="solitaire-icon" />,
+  },
+  {
+    id: 'minesweeper',
+    href: 'https://mario1842.github.io/winnable-minesweeper/',
+    title: 'Winnable Minesweeper',
+    label: 'Minesweeper',
+    icon: <MineIcon className="mine-icon" />,
   },
 ] as const
 
