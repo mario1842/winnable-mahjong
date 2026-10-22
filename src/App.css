@@ -162,19 +162,22 @@ a.sister-btn {
 }
 
 .solitaire-icon,
-.mine-icon {
+.mine-icon,
+.flow-icon {
   width: 1.35rem;
   height: 1.35rem;
   display: block;
 }
 
-.mine-icon {
+.mine-icon,
+.flow-icon {
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }
 
 .sister-link .solitaire-icon,
-.sister-link .mine-icon {
+.sister-link .mine-icon,
+.sister-link .flow-icon {
   width: 1.55rem;
   height: 1.55rem;
 }

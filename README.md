@@ -7,6 +7,7 @@ Mahjong Solitaire in the browser where **every deal is guaranteed solvable**. Pi
 Also play:
 - **[Winnable Solitaire](https://mario1842.github.io/winnable-solitaire/)**
 - **[Winnable Minesweeper](https://mario1842.github.io/winnable-minesweeper/)**
+- **[Flow of the Elements](https://mario1842.github.io/flow-of-the-elements/)**
 
 ## Play locally
 
